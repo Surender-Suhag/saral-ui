@@ -8,15 +8,12 @@ import { ComponentList } from "./components/test-components/ComponentList";
 import { Testlab } from "./components/test-lab/TestLab";
 import NoMatch from "./components/NoMatch";
 import { Layout } from "./components/common/Layout";
-import {} from './components/common/header/Jombotron';
-import { NavigationBar } from './components/common/header/NavigationBar'
-import {Jumbotron} from "./components/common/header/Jombotron";
+import {Header} from './components/common/header';
 const App = () => (
   <React.Fragment>
 
     <Router>
-      <NavigationBar />
-      <Jumbotron/>
+      <Header/>
       <Layout>
         <Switch>
           <Route exact path="/" component={Home} />
