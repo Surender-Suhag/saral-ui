@@ -1,7 +1,7 @@
 import React from "react";
 
 export const Home = () => (
-  <div classname="text-info" >
+  <div className="text-info" >
     <h2 className="display-3">Saral Automation Framework</h2>
     <hr />
     <h6>CONTINUOUS TESTING</h6>

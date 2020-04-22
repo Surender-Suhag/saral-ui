@@ -9,7 +9,7 @@ const Styles = styled.div`
         background: url(${headerimage}) no-repeat fixed bottom;
         background-size:cover;
         height:200px;
-        color:#ccc;
+        color:#355;
         position: relative;
         z-index:-2;
     }
