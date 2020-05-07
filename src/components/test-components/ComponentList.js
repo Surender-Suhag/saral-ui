@@ -1,8 +1,15 @@
 import React from 'react';
 import {TwoColumnLayout} from '../common/TwoColumnLayout';
+import ComponentTree from './ComponentTree';
+import LeftPanelTreeStructure from '../common/LeftPanelTreeStructure';
+
+function onNodeSelection(node){
+    console.log('node selected -- ' + node.id)
+}
 
 const leftPane = () => (
-    <div>This is some text which should appear on the left side of the div element</div>
+//    <ComponentTree />
+    <LeftPanelTreeStructure context= 'component' onNodeSelection={onNodeSelection} />
 );
 
 const rightPane = () => (

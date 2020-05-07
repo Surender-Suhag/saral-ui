@@ -8,7 +8,8 @@ import Table from "react-bootstrap/Table";
 
 class Keywords extends Component {
   componentDidMount() {
-    this.props.getKeywords();
+    if(this.props.keywords === null || this.props.keywords.length === 0)
+       this.props.getKeywords();
   }
 
   loading = () => <div> Keywords are loading</div>;
@@ -43,7 +44,7 @@ class Keywords extends Component {
       size="md"
     >
       {this.tableHeader()}
-      <tbody>{this.props.Keywords.map(this.renderKeyword)}</tbody>
+      <tbody>{this.props.keywords.map(this.renderKeyword)}</tbody>
     </Table>
   );
 
@@ -59,6 +60,6 @@ class Keywords extends Component {
 const mapStateToProps = (state) => ({
   isFetching: state.loading[GET_KEYWORDS],
   error: state.error[GET_KEYWORDS],
-  Keywords: state.automationkeywords,
+  keywords: state.automationkeywords,
 });
 export default connect(mapStateToProps, { getKeywords })(Keywords);

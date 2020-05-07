@@ -11,6 +11,12 @@ export const getKeywords = () => async (dispatch) => {
 
   try {
     response = await saralApi.get("/keywords");
+    dispatch({
+      type: GET_KEYWORDS + "_" + SUCCESS,
+      payload: {
+        keywords: response.data,
+      },
+    });
   } catch (err) {
     dispatch({
       type: GET_KEYWORDS + "_" + FAILURE,
@@ -19,10 +25,5 @@ export const getKeywords = () => async (dispatch) => {
       },
     });
   }
-  dispatch({
-    type: GET_KEYWORDS + "_" + SUCCESS,
-    payload: {
-      keywords: response.data,
-    },
-  });
+  
 };
