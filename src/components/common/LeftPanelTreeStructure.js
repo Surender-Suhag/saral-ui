@@ -1,73 +1,101 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 
 import { Loading } from "../common/Loading";
 import { Error } from "../common/Error";
 import Tree from "../common/tree";
-import { Get_COMPONENT_TREE } from "../../actions/types";
-import { getComponents } from "../../actions";
 import { TreeHeader } from "./TreeHeader";
+import { treeContext } from "../context";
+import ObjectUtil from "../../util/ObjectUtil";
+import JsonUtil from "../../util/JsonTreeStructureUtil";
+import { changeSelectedNode } from "../../actions";
 
-const treeContext = {
-  component: {
-    folderPropName: "childNodes",
-    filePropName: "childComponentsDetails",
-    stateDataReducer: "component-nodes",
-    stateLoading: Get_COMPONENT_TREE,
-    stateError: Get_COMPONENT_TREE,
-    getDataReducer: getComponents,
-  },
-};
+function LeftPanel(props) {
+  const {
+    loading,
+    error,
+    data,
+    context,
+    changeData,
+    loadData,
+    selectedNode,
+    onAddNewFolderClick,
+    onAddNewFileClick
+  } = props;
+  const jsonOps = JsonUtil.for(data);
+  
+  useEffect(() => {
+    ObjectUtil.isEmpty(data) && loadData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
 
-class LeftPanel extends React.Component {
-  componentDidMount() {
-    this.props.getTreeData();
-  }
+  const onToggle = (node) => {
+    const newData = jsonOps.togglePropForId(node.id, "isOpen");
+    changeData(newData);
+  };
 
-  getErrorElement(){
-    return <Error message = {this.props.error} />;
-  }
+  const onNodeSelection = (node, type) => {
+    props.changeSelectedNode(node.id, type);
+  };
 
-  getTreeStructure(){
-    const {data, context } = this.props;
+  const getTreeHeader = () => {
     return (
-      <div>
-        <TreeHeader />
+      <TreeHeader
+        canAddFolder={selectedNode.nodeId && selectedNode.nodeType === "folder"}
+        canAddFile={selectedNode.nodeId ? true : false}
+        onAddFolderSubmit = {onAddNewFolderClick}
+        onAddFileSubmit = {onAddNewFileClick}
+      />
+    );
+  };
+  const getTreeStructure = (data, context, changeData) => (
+    <>
+      {getTreeHeader()}
+      {ObjectUtil.isEmpty(data) ? (
+        <div> no element</div>
+      ) : (
         <Tree
           data={data}
-          folderPropName={treeContext[context].folderPropName}
-          filePropName={treeContext[context].filePropName}
-          onNodeSelection={this.props.onNodeSelection}
+          onNodeSelection={onNodeSelection}
+          onToggle={onToggle}
+          selectedNode={selectedNode.nodeId}
         />
-      </div>
-    )
-  }
-  render() {
-    let { loading, error} = this.props;
-    return loading ? (
-      <Loading />
-    ) : error ? (
-      this.getErrorElement()
-    ) :
-   
-      this.getTreeStructure()
-   
-  }
+      )}
+    </>
+  );
+
+  const getErrorElement = (message) => <Error message={message} />;
+
+  return (
+    <>
+      {(loading && <Loading />) ||
+        (error && getErrorElement(error)) ||
+        getTreeStructure(data, context, changeData)}
+    </>
+  );
 }
 
 const mapStateToProps = (state, props) => {
-  let { context } = props;
+  const { context } = props;
   return {
-    loading: state.loading[treeContext[context].stateLoading],
-    error: state.error[treeContext[context].stateError],
-    data: state[treeContext[context].stateDataReducer],
+   data:state[treeContext[context].stateDataReducer].data,
+   loading:state.loading[treeContext[context].getResourcesActionType],
+   error:state.error[treeContext[context].getResourcesActionType],
+    selectedNode: state.selectedNode,
   };
 };
 
 const mapDispatchToProps = (dispatch, props) => {
   let { context } = props;
   return {
-    getTreeData: () => dispatch(treeContext[context].getDataReducer()),
+    loadData: () => dispatch(treeContext[context].getDataReducer()),
+    changeData: (data) =>
+      dispatch(treeContext[context].changeDataReducer(data)),
+    changeSelectedNode: (nodeId, nodeType) =>
+      dispatch(changeSelectedNode(nodeId, nodeType)),
+      onAddNewFolderClick : (componentName) => dispatch(treeContext[context].onAddNewFolderClick(componentName)),
+      onAddNewFileClick : (componentName) => dispatch(treeContext[context].onAddNewFileClick(componentName))
+
   };
 };
 

@@ -7,8 +7,6 @@ const renderNode = (
   type,
   onToggle,
   level,
-  folderPropName,
-  filePropName,
   onNodeSelection,
   selectedNode
 ) => (
@@ -18,8 +16,6 @@ const renderNode = (
     type={type}
     level={level}
     onToggle={onToggle}
-    folderPropName={folderPropName}
-    filePropName={filePropName}
     onNodeSelection={onNodeSelection}
     selectedNode = {selectedNode}
   />
@@ -27,8 +23,6 @@ const renderNode = (
 
 const renderChildElements = (
   node,
-  folderPropName,
-  filePropName,
   level,
   onToggle,
   onNodeSelection,
@@ -38,26 +32,22 @@ const renderChildElements = (
   level = level + 1;
 
   if (isOpen) {
-    const folderElements = node[folderPropName].map((node) => {
+    const folderElements = node.childFolders.map((node) => {
       return renderNode(
         node,
         "folder",
         onToggle,
         level,
-        folderPropName,
-        filePropName,
         onNodeSelection,
         selectedNode
       );
     });
-    const fileElements = node[filePropName].map((node) => {
+    const fileElements = node.childFiles.map((node) => {
       return renderNode(
         node,
         "file",
         onToggle,
         level,
-        folderPropName,
-        filePropName,
         onNodeSelection,
         selectedNode
       );
@@ -72,8 +62,6 @@ const TreeNode = (props) => {
   const {
     node,
     onToggle,
-    folderPropName,
-    filePropName,
     level = 0,
     onNodeSelection,
     selectedNode
@@ -83,8 +71,6 @@ const TreeNode = (props) => {
       <NodeElement {...props} />
       {renderChildElements(
         node,
-        folderPropName,
-        filePropName,
         level,
         onToggle,
         onNodeSelection,

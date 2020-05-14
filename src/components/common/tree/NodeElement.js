@@ -4,14 +4,14 @@ import ExpandCollapseIcon from "./ExpandCollapseIcon";
 import FileFolderIcon from "./FileFolderIcon";
 
 const NodeElement = (props) => {
-  const { node, type, level, selectedNode, folderPropName } = props;
+  const { node, type, level, selectedNode } = props;
   const isOpen = node.isOpen ? node.isOpen : false;
   return (
     <StyledTreeNode
       level={level}
       type={type}
-      isSelected={isNodeSelected(node, selectedNode, folderPropName)}
-      onClick={() => props.onNodeSelection(node)}
+      isSelected={isNodeSelected(node, selectedNode)}
+      onClick={() => props.onNodeSelection(node,type)}
     >
       <ExpandCollapseIcon {...props} />
       <FileFolderIcon type={type} isOpen={isOpen} />
@@ -20,12 +20,10 @@ const NodeElement = (props) => {
   );
 };
 
-function isNodeSelected(currentNode, selectedNode, folderPropName) {
+function isNodeSelected(currentNode, selectedNode) {
   return (
     selectedNode &&
-    currentNode.id === selectedNode.id &&
-    currentNode.hasOwnProperty(folderPropName) ===
-      selectedNode.hasOwnProperty(folderPropName)
+    currentNode.id === selectedNode
   );
 }
 
@@ -37,7 +35,8 @@ const StyledTreeNode = styled.div`
   align-items: center;
   padding: 5px 8px;
   padding-left: ${(props) => calculatePaddingLeft(props.level)}px;
-  background-color: ${(props) => (props.isSelected ? "DarkTurquoise" : "white")};
+  background-color: ${(props) => (props.isSelected ? "paleturquoise" : "white")};
+  color:${(props) => (props.isSelected && 'navy')};
   
   &:hover {
     background-color: ${(props) => (props.isSelected ? null : "lightgray")};

@@ -1,68 +1,9 @@
-import React, { Component } from "react";
-import _ from "lodash";
+import React from "react";
+// import _ from "lodash";
 import TreeNode from "./TreeNode";
-import ObjectUtil from '../../../util/ObjectUtil';
 
-class Tree extends Component {
-  constructor(props) {
-    super(props);
-  //  const data = _.cloneDeep(props.data);
-  //   this.state = { data: data,selectedNode : null };
-
-    this.state = { data: props.data,selectedNode : null };
-  }
-
-
-
-  getChangedObject = (parent, id) => {
-    if (parent.id === id) {
-      let isOpen = parent.isOpen;
-      if (isOpen === undefined) {
-        return { ...parent, isOpen: true };
-      } else {
-        return { ...parent, isOpen: !isOpen };
-      }
-    }
-
-    for (let i = 0; i < parent.childNodes.length; i++) {
-      let temp = this.getChangedObject(parent.childNodes[i], id);
-      if (temp !== parent.childNodes[i]) {
-        let changedData = {
-          ...parent,
-          childNodes: Object.assign([], parent.childNodes, { [i]: temp }),
-        };
-        return changedData;
-      }
-    }
-    return parent;
-  };
-
-  onToggle = (node) => {
-    this.setState((state) => {
-      const changedData = this.getChangedObject(state.data, node.id);
-      return { data: changedData };
-    });
-  };
-
-  onNodeSelection = node => {
-    this.setState({selectedNode:node});
-    this.props.onNodeSelection(node);
-  }
-  render() {
-    return (
-      ObjectUtil.isEmpty(this.state.data) ? <div> no element</div> :
-      <TreeNode
-        node={this.state.data}
-        level={0}
-        type="folder"
-        onToggle={this.onToggle}
-        folderPropName={this.props.folderPropName}
-        filePropName={this.props.filePropName}
-        onNodeSelection={this.onNodeSelection}
-        selectedNode={this.state.selectedNode}
-      />
-    );
-  }
-}
+const Tree = (props) => (
+  <TreeNode {...props} node={props.data} level={0} type="folder" />
+);
 
 export default Tree;

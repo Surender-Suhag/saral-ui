@@ -24,8 +24,6 @@ class ComponentTree extends React.Component {
     ) : (
       <Tree
         data={this.props.componentNodes}
-        folderPropName="childNodes"
-        filePropName="childComponentsDetails"
         onNodeSelection={this.onNodeSelection}
       />
     );
