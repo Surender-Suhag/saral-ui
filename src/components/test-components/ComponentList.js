@@ -2,14 +2,12 @@ import React from "react";
 import { TwoColumnLayout } from "../common/TwoColumnLayout";
 import LeftPanelTreeStructure from "../common/LeftPanelTreeStructure";
 
-function onNodeSelection(node) {
-  console.log("node selected -- " + node.id);
-}
+
 
 const leftPane = () => (
   <LeftPanelTreeStructure
     context="components"
-    onNodeSelection={onNodeSelection}
+   
   />
 );
 

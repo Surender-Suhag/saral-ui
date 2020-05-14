@@ -42,7 +42,7 @@ function LeftPanel(props) {
     return (
       <TreeHeader
         canAddFolder={selectedNode.nodeId && selectedNode.nodeType === "folder"}
-        canAddFile={selectedNode.nodeId ? true : false}
+        // canAddFile={selectedNode.nodeId ? true : false}
         onAddFolderSubmit = {onAddNewFolderClick}
         onAddFileSubmit = {onAddNewFileClick}
       />

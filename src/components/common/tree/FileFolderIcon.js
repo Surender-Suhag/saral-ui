@@ -7,6 +7,7 @@ import {
   FaFolderOpen,
 } from "react-icons/fa";
 
+import {AiOutlineFileText} from 'react-icons/ai';
 
 const StyledNodeIcon = styled.div`
   font-size: 12px;
@@ -15,7 +16,7 @@ const StyledNodeIcon = styled.div`
 
 const FileFolderIcon = ({type, isOpen}) => (
     <StyledNodeIcon>
-      {type === "file" ? <FaFile color={'DarkCyan'} /> : isOpen ? <FaFolderOpen color={'DimGray'} /> : <FaFolder color={'darkslategray'} />}
+      {type === "file" ? <AiOutlineFileText size={'2em'} color={'DimGray'} /> : isOpen ? <FaFolderOpen size={'2em'} color={'DimGray'} /> : <FaFolder size={'2em'} color={'darkslategray'} />}
     </StyledNodeIcon>
   );
 

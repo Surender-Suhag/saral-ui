@@ -23,11 +23,11 @@ const StyledHeader = styled.div`
 `;
 
 export const TreeHeader = (props) => {
-  const { canAddFolder, canAddFile, onAddFolderSubmit,onAddFileSubmit } = props;
+  const { canAddFolder, onAddFolderSubmit,onAddFileSubmit } = props;
   const [showNewFolderModal, setShowNewFolderModal] = useState(false);
   const [showNewFileModal, setShowNewFileModal] = useState(false);
-
   const [submitActive, setSubmitActive] = useState(false);
+
   const context = useSelector((state) => state.context);
   const  error  = useSelector(
     (state) => context && state.error[treeContext[context].addResourcesActionType]
@@ -55,7 +55,7 @@ export const TreeHeader = (props) => {
       setShowNewFolderModal(false);
       setShowNewFileModal(false);
     }
-  }, [submitActive,loading]);
+  }, [submitActive,loading,error]);
 
   return (
     <StyledHeader>
@@ -70,11 +70,11 @@ export const TreeHeader = (props) => {
         }
       />
       <FiFilePlus
-        className={"icon shadow-lg" + (canAddFile ? "" : " disabled")}
+        className={"icon shadow-lg" + (canAddFolder ? "" : " disabled")}
         size={"1.5em"}
         title="Add File"
         onClick={
-          canAddFile
+          canAddFolder
             ? () => setShowNewFileModal(!showNewFileModal)
             : null
         }
