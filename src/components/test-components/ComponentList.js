@@ -7,7 +7,7 @@ import LeftPanelTreeStructure from "../common/LeftPanelTreeStructure";
 const leftPane = () => (
   <LeftPanelTreeStructure
     context="components"
-   
+    
   />
 );
 

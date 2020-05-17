@@ -44,11 +44,14 @@ export const addNewComponentNode = (componentName) => async (dispatch,getState) 
                 id:parentId
             }
         });
-        console.log(jsonOp.addFolderToNode(parentId,response.data));
+        const data = response.data;
+        data.childFolders = data.childFolders ||  [];
+        data.childFiles = data.childFiles ||  [];
+
         dispatch({
             type:ADD_COMPONENT_NODE + "_" + SUCCESS,
             payload: {
-                data:jsonOp.addFolderToNode(parentId,response.data)
+                data:jsonOp.addFolderToNode(parentId,data)
             }
         })
     }catch (error){
