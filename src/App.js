@@ -12,7 +12,7 @@ import { ComponentList } from "./components/test-components/ComponentList";
 import { Testlab } from "./components/test-lab/TestLab";
 import NoMatch from "./components/NoMatch";
 import { Layout } from "./components/common/Layout";
-import { Header } from "./components/common/header";
+import { Header } from "./components/common/Header";
 
 
 const App = () => {
