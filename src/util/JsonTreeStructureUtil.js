@@ -22,6 +22,7 @@ JsonTreeStructureUtil.for = (data) => {
       return action(currentNode);
     }
 
+    
     for (let i = 0; i < currentNode.childFolders.length; i++) {
       let temp = callRecursiveActionOnMatchingNode(currentNode.childFolders[i],id,action);
       if (temp !== currentNode.childFolders[i]) {
@@ -52,4 +53,23 @@ JsonTreeStructureUtil.for = (data) => {
   return { togglePropForId,addFolderToNode,addFileToNode };
 };
 
+export const getNodeById = (data,nodeId) => {
+  if(data.id === nodeId){
+        return data;
+  }
+
+  for(let index=0; index < data.childFiles.length;index++){
+      if(data.childFiles[index].id === nodeId){
+          return data.childFiles[index];
+      }
+  }
+
+  for(let index=0; index < data.childFolders.length;index++){
+      const val =  getNodeById(data.childFolders[index],nodeId);
+      if(val !== null)
+          return val;
+  }
+
+  return null;
+}
 export default JsonTreeStructureUtil;  

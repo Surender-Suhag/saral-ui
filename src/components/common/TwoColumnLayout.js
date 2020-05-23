@@ -9,7 +9,7 @@ const StyledDiv = styled.div`
 `;
 
 export const TwoColumnLayout = ({ left, right }) => (
-  <Container fluid className="my-3 px-1">
+  <Container fluid >
     <Row>
       <Col
         className="d-none d-md-inline text-secondary font-weight-bold"
@@ -18,7 +18,7 @@ export const TwoColumnLayout = ({ left, right }) => (
         <StyledDiv>{left}</StyledDiv>
       </Col>
       <Col xs={12} md={9}>
-        <StyledDiv>{right}</StyledDiv>
+        <div>{right}</div>
       </Col>
     </Row>
   </Container>

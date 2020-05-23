@@ -6,6 +6,6 @@ import {Jumbotron} from './Jombotron';
 export const Header = () => (
     <div>
         <NavigationBar/>
-        <Jumbotron/>
+        {/* <Jumbotron/> */}
     </div>
 )

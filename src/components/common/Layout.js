@@ -19,7 +19,7 @@ const InnerLayout = (props) => {
   useContext(history,props.changeContext);
 
   return (
-    <div className="container-fluid mx-3 mt-3 d-flex min-vh-70 flex-column h-100">
+    <div className="container-fluid mx-3 mt-1 my-3 px-1  d-flex flex-column ">
       {props.children}
     </div>
   );
